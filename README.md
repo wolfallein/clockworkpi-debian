@@ -1,16 +1,21 @@
+# Bin folder
+
+For convenience I added compiled kernel files (uImage, dts, boot.scr) to the bin folder if you just want to update your system.
+Just copy the files to /BOOT.
+
 # SD card preparation
 
 Use `lsblk` to make sure you are working with the SD card. Replace `/dev/sdX` with your device.
 
 ## Create partitions
 ````
-sudo fdisk /dev/sdb
+sudo fdisk /dev/sdX
 ````
 1. Delete all existent partitions. Use `d` to delete.
 2. Create two new primary partitions. Use option `n` to create.
 
   First Partition `Start = 8192 End = 93814`
-  Second partition `Start = 94218 End = Size available for your OS. You can use any size.`
+  Second partition `Start = 94218 End = XXX` - End = Size available for your OS. You can use any size.
   
 3. Define `vfat` type for first partition. Use `t`, `1` to select first partition, and use code `c` for `W95 FAT32 (LBA)`
 4. Define `ext` type for second partition. Use `t`, `2` to select second partition, and use `83` for `Linux`.
@@ -48,15 +53,15 @@ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/sdX bs=1024 seek=8
 cd ..
 ````
 
-# Kernel - 5.7rc6
+# Kernel - 5.7
 
 You can use mainline. I use smaeul's for better power management support.
 
 ````
 git clone https://github.com/smaeul/linux.git --branch=patch/irqchip-v2 --depth=1
 cd linux
-cp ../cpi-5.7-rc5.smaeul.patch .
-git apply cpi-5.7-rc5.smaeul.patch
+cp ../cpi-kernel-5.7.smaeul.patch .
+git apply cpi-kernel-5.7.smaeul.patch
 export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabihf-
 make clockworkpi_cpi3_defconfig
