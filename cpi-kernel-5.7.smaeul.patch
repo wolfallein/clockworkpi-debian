@@ -183,7 +183,7 @@ index 000000000..5a83ad067
 +		};
 +	};
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ecc074981..74ff0424b 100644
+index 50659d769..f85c78d1e 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -9064,6 +9064,14 @@ Q:	http://patchwork.linuxtv.org/project/linux-media/list/
@@ -1186,7 +1186,7 @@ index 000000000..6d683da7d
 +};
 diff --git a/arch/arm/configs/clockworkpi_cpi3_defconfig b/arch/arm/configs/clockworkpi_cpi3_defconfig
 new file mode 100644
-index 000000000..6b4bbcab7
+index 000000000..93d5345e2
 --- /dev/null
 +++ b/arch/arm/configs/clockworkpi_cpi3_defconfig
 @@ -0,0 +1,229 @@
@@ -1248,7 +1248,7 @@ index 000000000..6b4bbcab7
 +# CONFIG_WLAN_VENDOR_ADMTEK is not set
 +# CONFIG_WLAN_VENDOR_ATH is not set
 +# CONFIG_WLAN_VENDOR_ATMEL is not set
-+CONFIG_BRCMFMAC=y
++CONFIG_BRCMFMAC=m
 +# CONFIG_WLAN_VENDOR_CISCO is not set
 +# CONFIG_WLAN_VENDOR_INTEL is not set
 +# CONFIG_WLAN_VENDOR_INTERSIL is not set
@@ -1377,7 +1377,7 @@ index 000000000..6b4bbcab7
 +CONFIG_STAGING=y
 +CONFIG_STAGING_MEDIA=y
 +CONFIG_VIDEO_SUNXI=y
-+CONFIG_VIDEO_SUNXI_CEDRUS=y
++CONFIG_VIDEO_SUNXI_CEDRUS=m
 +# CONFIG_SUN8I_DE2_CCU is not set
 +# CONFIG_IOMMU_SUPPORT is not set
 +CONFIG_IIO=y
@@ -2563,10 +2563,10 @@ index 3ad828eae..fd26f3a79 100644
  		.compatible = "panel-dpi",
  		.data = &panel_dpi,
 diff --git a/drivers/input/misc/axp20x-pek.c b/drivers/input/misc/axp20x-pek.c
-index c8f87df93..7437cbe2e 100644
+index 9c6386b2a..30a37fc56 100644
 --- a/drivers/input/misc/axp20x-pek.c
 +++ b/drivers/input/misc/axp20x-pek.c
-@@ -212,10 +212,18 @@ static irqreturn_t axp20x_pek_irq(int irq, void *pwr)
+@@ -215,10 +215,18 @@ static irqreturn_t axp20x_pek_irq(int irq, void *pwr)
  	 * The power-button is connected to ground so a falling edge (dbf)
  	 * means it is pressed.
  	 */
@@ -2587,7 +2587,7 @@ index c8f87df93..7437cbe2e 100644
  
  	input_sync(idev);
  
-@@ -252,6 +260,7 @@ static int axp20x_pek_probe_input_device(struct axp20x_pek *axp20x_pek,
+@@ -242,6 +250,7 @@ static int axp20x_pek_probe_input_device(struct axp20x_pek *axp20x_pek,
  	idev->dev.parent = &pdev->dev;
  
  	input_set_capability(idev, EV_KEY, KEY_POWER);

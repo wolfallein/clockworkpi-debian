@@ -3,11 +3,57 @@
 For convenience I added compiled kernel files (uImage, dts, boot.scr) to the bin folder if you just want to update your system.
 Just copy the files to /BOOT.
 
-# SD card preparation
+# Dependencies (Debian/Ubuntu)
+
+General:
+
+````
+sudo apt install git build-essential
+````
+
+For u-boot build:
+
+````
+sudo apt install gcc-arm-linux-gnueabihf \
+    bison flex swig python3-distutils python3-dev
+````
+
+For Linux Kernel 5.7:
+
+````
+sudo apt install libssl-dev u-boot-tools
+````
+
+For generating Debian rootfs:
+
+````
+sudo apt install multistrap qemu-user-static
+````
+
+thanks @omgmog
+
+# Automatic procedure
+
+Run:
+
+````
+./auto-create-image.sh
+````
+
+Copy image to SD card (Replace /dev/sdX with your SD card):
+
+````
+sudo dd bs=4M if=clockworkpi-debian.img of=/dev/sdX conv=fsync
+````
+
+If you have problems, try using `bs=1M`.
+
+# Manual procedure
+## SD card preparation
 
 Use `lsblk` to make sure you are working with the SD card. Replace `/dev/sdX` with your device.
 
-## Create partitions
+### Create partitions
 ````
 sudo fdisk /dev/sdX
 ````
@@ -30,7 +76,7 @@ Device     Boot Start      End  Sectors  Size Id Type
 
 5. Use `w` to write new partition table.
 
-## Format the SD card, and set the labels (labels are not neccessary, but convenient)
+### Format the SD card, and set the labels (labels are not neccessary, but convenient)
 
 ````
 sudo mkfs.vfat /dev/sdX1
@@ -38,7 +84,7 @@ sudo fatlabel /dev/sdX1 BOOT
 sudo mkfs.ext4 /dev/sdX2 -L rootfs
 ````
 
-# u-boot
+## u-boot
 
 ````
 git clone git://git.denx.de/u-boot.git --depth=1
@@ -53,7 +99,7 @@ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/sdX bs=1024 seek=8
 cd ..
 ````
 
-# Kernel - 5.7
+## Kernel - 5.7
 
 You can use mainline. I use smaeul's for better power management support.
 
@@ -74,14 +120,14 @@ sudo cp -p arch/arm/boot/dts/sun8i-r16-clockworkpi-cpi3-hdmi.dtb /media/$USER/BO
 cd ..
 ````
 
-# Generate boot.scr
+## Generate boot.scr
 
 ````
 mkimage -C none -A arm -T script -d boot.cmd boot.scr
 sudo cp -p boot.scr /media/$USER/BOOT/
 ````
 
-# Generate Debian root
+## Generate Debian root
 
 If you want to have wifi already connected, change the contents of `wpa_supplicant.conf` with your information.
 
@@ -129,10 +175,8 @@ https://wiki.debian.org/Locale
 
 # Known Issues
 
-1. HDMI doesn't work.
-1. Charging/Power LED doesn't work.
-
-Problems above are caused becuase I don't know how to configure the HDMI IC and LEDS within u-boot. I also don't kown how u-boot look for different dtb files when it detects the HDMI cable. The original `boot.scr` file only point to one `dts`. Unfortunattley we don't have a receipt for u-boot from Clockworkpi developers, so Ineeded to create my own, and adapt it.
+1. HDMI audio doesn't work, the sound is being routed to GameShell speakers. To have HDMI out connect the HDMI cable and reboot.
+1. ~~Charging/Power LED doesn't work.~~ FIXED
 
 # sites for reference
 https://www.acmesystems.it/debian_wheezy

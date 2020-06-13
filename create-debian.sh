@@ -1,5 +1,5 @@
 #!/bin/bash
-rootfs_dir="target-rootfs"
+rootfs_dir="clockworkpi-image/rootfs"
 
 # Create filesystem with packages
 multistrap -a armhf -f multistrap.conf
@@ -27,7 +27,7 @@ chroot $rootfs_dir passwd -d root
 chroot $rootfs_dir systemctl enable brcmloader.service
 # Kill processes running in rootfs
 fuser -sk $rootfs_dir
-rm target-rootfs/usr/bin/qemu-arm-static
+rm $rootfs_dir/usr/bin/qemu-arm-static
 umount $rootfs_dir/dev/
 
 # Copy bt/wifi firmware
@@ -44,6 +44,10 @@ echo proc /proc proc defaults 0 0 >> $filename
 # Copy network files
 cp interfaces $rootfs_dir/etc/network/
 cp wpa_supplicant.conf $rootfs_dir/etc/wpa_supplicant/
+
+# Add modules to start at boot
+echo brcmfmac >> $rootfs_dir/etc/modules
+echo blacklist sunxi_cedrus > $rootfs_dir/etc/modprobe.d/nocedrus.conf
 
 # Fix dhcp server for RNDIS usb
 echo "subnet 192.168.11.0 netmask 255.255.255.0 {
