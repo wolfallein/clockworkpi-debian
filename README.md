@@ -132,7 +132,7 @@ sudo cp -p boot.scr /media/$USER/BOOT/
 If you want to have wifi already connected, change the contents of `wpa_supplicant.conf` with your information.
 
 ````
-sudo ./cpi-create-debian.sh
+sudo ./create-debian.sh
 sudo rsync -axHAX --progress target-rootfs/ /media/$USER/rootfs/
 sudo umount /media/$USER/rootfs
 ````

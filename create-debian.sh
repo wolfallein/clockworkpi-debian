@@ -92,6 +92,10 @@ if [[ -f $filename ]]; then
     done
 fi
 
+# Expand filesystem executable
+cp -p expand.sh $rootfs_dir/root/
+echo "/root/expand.sh" >> $rootfs_dir/root/.profile
+
 ### If Retroarch is installed and you want it to start on boot
 # Execute retroarch at boot
 echo "if [[ \"\$(tty)\" == \"/dev/tty1\" ]]
