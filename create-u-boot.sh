@@ -1,5 +1,5 @@
 #!/bin/bash
-git clone git://git.denx.de/u-boot.git --depth=1
+git clone https://github.com/u-boot/u-boot.git --depth=1
 cd u-boot
 cp ../cpi-u-boot.patch .
 git apply cpi-u-boot.patch
