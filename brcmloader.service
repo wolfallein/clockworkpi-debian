@@ -1,9 +1,0 @@
-[Unit]
-Description=Load bluetooth firmware.
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/brcm_patchram_plus --patchram /lib/firmware/brcm/bcm43438a1.hcd --enable_hci --bd_addr B0:F1:EC:2D:07:5B --no2bytes --tosleep 5000 /dev/ttyS1
-
-[Install]
-WantedBy=multi-user.target
