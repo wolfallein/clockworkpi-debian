@@ -137,7 +137,7 @@ cp -pr asound.state $rootfs_dir/var/lib/alsa/
 # Execute retroarch at boot
 echo "if [[ \"\$(tty)\" == \"/dev/tty1\" ]]
  then
-  pulseaudio --start
+  pulseaudio --daemonize --disallow-exit
   # We need to load it after boot is complete because if we have it as an
   # module option it can load before fstab mount the filesystem and it will
   # mount as a read-only
