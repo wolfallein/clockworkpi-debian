@@ -78,8 +78,7 @@ echo NetworkInterfaceBlacklist=usb0 >> $rootfs_dir/etc/connman/main.conf
 echo AlwaysConnectedTechnologies =bluetooth,wifi >> $rootfs_dir/etc/connman/main.conf
 
 # Add modules to start at boot
-echo brcmfmac >> $rootfs_dir/etc/modules
-#echo blacklist sunxi_cedrus > $rootfs_dir/etc/modprobe.d/nocedrus.conf
+echo blacklist sunxi_cedrus > $rootfs_dir/etc/modprobe.d/nocedrus.conf
 echo g_multi >> $rootfs_dir/etc/modules
 echo options g_multi file=\"\" ro=0 removable=1 stall=0 >> $rootfs_dir/etc/modprobe.d/multigadget.conf
 
