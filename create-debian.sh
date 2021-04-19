@@ -147,6 +147,8 @@ fi" >> $rootfs_dir/home/cpi/.profile
 # Replace executable file
 cp -p retroarch/retroarch $rootfs_dir/usr/bin/
 chmod +x $rootfs_dir/usr/bin/retroarch
+# hold on retroarch to avoid upgrade removing the patched version
+chroot $rootfs_dir apt-mark hold retroarch
 
 echo
 echo "$rootfs_dir configured"
